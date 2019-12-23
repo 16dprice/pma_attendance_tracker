@@ -17,7 +17,7 @@ function App() {
         <br/>
         <Route path="/members" exact component={MembersList} />
         <Route path="/events" exact component={EventsList} />
-        <Route path="/events/:uuid" exact component={AttendanceList} />
+        <Route path="/event/attendance-record/:uuid" component={AttendanceList} />
         <Route path="/members/create" component={CreateMember} />
         <Route path="/events/create" component={CreateEvent} />
       </div>

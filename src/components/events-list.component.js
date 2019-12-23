@@ -7,7 +7,7 @@ import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'
 
 const Event = props => (
     <tr>
-        <td><Link to={"/events/" + props.event.uuid} >{props.event.description}</Link></td>
+        <td><Link to={"/event/attendance-record/" + props.event.uuid} >{props.event.description}</Link></td>
         <td>{props.event.date}</td>
         <td>{props.event.call_time}</td>
     </tr>
