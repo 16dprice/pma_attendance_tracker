@@ -57,6 +57,7 @@ export default class AttendanceList extends Component {
     }
 
     render() {
+        console.log(this.props.match.params.uuid);
         return (
             <div>
                 <h3>Attendance Record for <u>{this.state.eventName}</u></h3>
@@ -72,7 +73,7 @@ export default class AttendanceList extends Component {
                     </tbody>
                 </table>
             </div>
-        )
+        );
     }
 
 }

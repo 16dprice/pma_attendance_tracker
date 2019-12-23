@@ -61,14 +61,21 @@ router.route('/add_records').post((req, res) => {
     const eventUuid = req.body.eventUuid;
     const memberNumbers = req.body.memberNumbers;
 
-    memberNumbers.forEach(memNum => {
-        Attendance.create({
-            eventUuid,
-            memberMemberNumber: memNum
-        });
-    })
-        .then(() => res.json('Attendance records added!'))
-        .catch(err => res.json(err));
+    let promises = [];
+
+    for(const memNum of memberNumbers) {
+        promises.push(
+            Attendance.create({
+                eventUuid,
+                memberMemberNumber: memNum
+            })
+            .then(attendance => { return 'Attendance record added!' })
+            .catch(err => res.json(err))
+        );
+    }
+
+    Promise.all(promises).then((results) => res.json(results));
+
 });
 
 // TODO: still need update and delete
