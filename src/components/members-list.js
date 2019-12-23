@@ -42,7 +42,7 @@ export default class MembersList extends Component {
         return (
             <div>
                 <h3>Members | <Link to={"/members/create"}><FontAwesomeIcon icon={faUserPlus}/></Link></h3>
-                <table className="table table-bordered">
+                <table className="table table-bordered text-center">
                     <thead className="thead-light">
                         <tr>
                             <th>Member Number</th>

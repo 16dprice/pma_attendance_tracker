@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave } from '@fortawesome/free-solid-svg-icons'
+
 function attendanceEnumToCleanText(letter) {
     switch(letter) {
         case 'P':
@@ -20,6 +23,7 @@ const AttendanceRecord = props => (
     <tr>
         <td>{props.record.first_name} {props.record.last_name}</td>
         <td>{attendanceEnumToCleanText(props.record.attendance)}</td>
+        <td><FontAwesomeIcon icon={faSave} size='2x' /></td>
     </tr>
 );
 
@@ -61,11 +65,12 @@ export default class AttendanceList extends Component {
         return (
             <div>
                 <h3>Attendance Record for <u>{this.state.eventName}</u></h3>
-                <table className="table table-bordered">
+                <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>
                         <th>Name</th>
                         <th>Attendance Status</th>
+                        <th> </th>
                     </tr>
                     </thead>
                     <tbody>
