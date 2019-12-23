@@ -40,7 +40,7 @@ export default class EventsList extends Component {
         return (
             <div>
                 <h3>Events | <Link to={"/events/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>
-                <table className="table">
+                <table className="table table-bordered">
                     <thead className="thead-light">
                     <tr>
                         <th>Description</th>

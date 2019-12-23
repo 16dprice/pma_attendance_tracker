@@ -60,7 +60,7 @@ export default class AttendanceList extends Component {
         return (
             <div>
                 <h3>Attendance Record for <u>{this.state.eventName}</u></h3>
-                <table className="table">
+                <table className="table table-bordered">
                     <thead className="thead-light">
                     <tr>
                         <th>Name</th>
