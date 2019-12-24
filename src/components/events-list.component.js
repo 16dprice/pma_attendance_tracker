@@ -80,7 +80,9 @@ export default class EventsList extends Component {
     }
 
     eventList() {
-        return this.state.events.map(event => {
+        const sortedEvents = this.state.events
+            .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
+        return sortedEvents.map(event => {
             return <Event event={event} key={event.uuid} />
         });
     }
