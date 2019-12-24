@@ -32,3 +32,5 @@ backend/models/members.csv
 package-lock.json
 
 package.json
+
+backend/database_backup_12_24_19.sql
