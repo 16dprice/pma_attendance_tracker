@@ -28,3 +28,7 @@ backend/node_modules
 .idea/
 
 backend/models/members.csv
+
+package-lock.json
+
+package.json
