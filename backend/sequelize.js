@@ -19,7 +19,7 @@ const Event = EventModel(connection, Sequelize);
 const Member = MemberModel(connection, Sequelize);
 const Attendance = AttendanceModel(connection, Sequelize);
 
-Attendance.belongsTo(Event); // adds eventUuid reference to events table
+Attendance.belongsTo(Event, { onDelete: 'cascade' }); // adds eventUuid reference to events table
 Attendance.belongsTo(Member); // adds memberMemberNumber reference to members table
 
 const resetDatabase = false;

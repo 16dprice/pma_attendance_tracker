@@ -22,6 +22,19 @@ router.route('/add').post((req, res) => {
 
 });
 
-// TODO: still need update and delete
+// delete
+router.route('/:id').delete((req, res) => {
+    // console.log(req.params.id);
+    // res.json(req.params.id);
+    Event.destroy({
+        where: {
+            uuid: req.params.id
+        }
+    })
+        .then(() => res.json('Deleted event!'))
+        .catch(err => res.status(400).json(err));
+});
+
+// TODO: still need update
 
 module.exports = router;
