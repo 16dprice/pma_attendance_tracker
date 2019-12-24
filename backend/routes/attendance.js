@@ -52,7 +52,7 @@ router.route('/add').post((req, res) => {
 
     Attendance.create({ eventUuid, memberMemberNumber, attendance, extra_notes })
         .then(attendance => res.json('Attendance record added!'))
-        .catch(err => res.json(err));
+        .catch(err => res.status(400).json('Error: ' + err));
 
 });
 
@@ -78,6 +78,23 @@ router.route('/add_records').post((req, res) => {
 
 });
 
-// TODO: still need update and delete
+router.route('/update/:id').post((req, res) => {
+    Attendance.findAll({
+        where: {
+            id: req.params.id
+        },
+        limit: 1
+    })
+        .then(attendanceRecords => {
+            attendanceRecords[0].attendance = req.body.attendance;
+
+            attendanceRecords[0].save()
+                .then(record => res.json('Attendance record updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// TODO: still need delete
 
 module.exports = router;

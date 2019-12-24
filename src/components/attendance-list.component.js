@@ -1,31 +1,66 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+class AttendanceRecord extends Component {
 
-function attendanceEnumToCleanText(letter) {
-    switch(letter) {
-        case 'P':
-            return 'Present';
-        case 'E':
-            return 'Excused';
-        case 'U':
-            return 'Unexcused';
-        case 'T':
-            return 'Tardy';
-        default:
-            return 'Present';
+    constructor(props) {
+        super(props);
+
+        this.onChangeAttendanceStatus = this.onChangeAttendanceStatus.bind(this);
+        this.updateRecord = this.updateRecord.bind(this);
+
+        this.state = {
+            record_id: this.props.record.id,
+            eventUuid: this.props.record.eventUuid,
+            first_name: this.props.record.first_name,
+            last_name: this.props.record.last_name,
+            attendance_status: this.props.record.attendance
+        };
+
     }
-}
 
-const AttendanceRecord = props => (
-    <tr>
-        <td>{props.record.first_name} {props.record.last_name}</td>
-        <td>{attendanceEnumToCleanText(props.record.attendance)}</td>
-        <td><FontAwesomeIcon icon={faSave} size='2x' /></td>
-    </tr>
-);
+    onChangeAttendanceStatus(e) {
+        this.setState({
+            attendance_status: e.target.value
+        });
+    }
+
+    updateRecord(e) {
+        e.preventDefault(e);
+
+        console.log(this.state);
+        const attendanceUpdateInfo = {
+            attendance: this.state.attendance_status
+        };
+
+        axios.post('http://localhost:5000/api/attendance/update/' + this.state.record_id, attendanceUpdateInfo)
+            .then(res => {
+                console.log(res.data);
+                window.location = '/event/attendance-record/' + this.state.eventUuid;
+            })
+            .catch(err => console.log('Error: ' + err));
+    }
+
+    render() {
+        return (
+            <tr>
+                <td>{this.state.first_name} {this.state.last_name}</td>
+                <td>
+                    <select value={this.state.attendance_status}
+                            onChange={this.onChangeAttendanceStatus}
+                    >
+                        <option value='P'>Present</option>
+                        <option value='E'>Excused</option>
+                        <option value='U'>Unexcused</option>
+                        <option value='T'>Tardy</option>
+                    </select>
+                </td>
+                <td><a href="#" onClick={this.updateRecord}>Update Status</a></td>
+            </tr>
+        );
+    }
+
+}
 
 export default class AttendanceList extends Component {
 
@@ -56,12 +91,11 @@ export default class AttendanceList extends Component {
 
     attendanceList() {
         return this.state.attendanceRecords.map(record => {
-            return <AttendanceRecord record={record} key={record.id} />
+            return <AttendanceRecord record={record} key={record.id}/>
         })
     }
 
     render() {
-        console.log(this.props.match.params.uuid);
         return (
             <div>
                 <h3>Attendance Record for <u>{this.state.eventName}</u></h3>
