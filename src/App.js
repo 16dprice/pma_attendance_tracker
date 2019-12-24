@@ -8,6 +8,7 @@ import EventsList from "./components/events-list.component";
 import AttendanceList from "./components/attendance-list.component";
 import CreateMember from "./components/create-member.component";
 import CreateEvent from "./components/create-event.component";
+import MembersAnalytics from "./components/members-analytics.component";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/event/attendance-record/:uuid" component={AttendanceList} />
         <Route path="/members/create" component={CreateMember} />
         <Route path="/events/create" component={CreateEvent} />
+        <Route path="/analytics" component={MembersAnalytics} />
       </div>
     </Router>
   );
