@@ -68,6 +68,7 @@ export default class AttendanceList extends Component {
         super(props);
         this.state = {
             eventName: '',
+            eventDate: '',
             attendanceRecords: []
         };
     }
@@ -82,8 +83,10 @@ export default class AttendanceList extends Component {
             .catch(err => console.log('Error: ' + err));
         axios.get('http://localhost:5000/api/events/?uuid=' + this.props.match.params.uuid)
             .then(res => {
+                console.log(res.data[0]);
                 this.setState({
-                    eventName: res.data[0].description
+                    eventName: res.data[0].description,
+                    eventDate: res.data[0].date
                 });
             })
             .catch(err => console.log('Error: ' + err));
@@ -98,7 +101,7 @@ export default class AttendanceList extends Component {
     render() {
         return (
             <div>
-                <h3>Attendance Record for <u>{this.state.eventName}</u></h3>
+                <h3>Attendance Record for <u>{this.state.eventName}</u> on <u>{this.state.eventDate}</u></h3>
                 <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>
