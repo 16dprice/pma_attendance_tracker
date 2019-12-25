@@ -9,25 +9,45 @@ export default class MemberAnalytics extends Component {
         super(props);
 
         this.state = {
-            memberNumber: '',
+            memberAbsenceInfo: {},
         };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/members/')
-            .then(res => {
-                this.setState({
-                    memberNumber: res.data[0].member_number // init to first member received
-                });
-            })
-            .catch(err => console.log('Err: ' + err));
+        axios.get('http://localhost:5000/api/members/absences/' + this.props.match.params.memberNumber)
+            .then(res => this.setState({
+                memberAbsenceInfo: res.data
+            }))
+            .catch(err => console.log('Err: ' + err))
+    }
+
+
+    absencesTable() {
+        return (
+            <tr>
+                <td>{this.state.memberAbsenceInfo.E}</td>
+                <td>{this.state.memberAbsenceInfo.U}</td>
+                <td>{this.state.memberAbsenceInfo.T}</td>
+            </tr>
+        );
     }
 
     render() {
         return (
             <div>
-                <h3>Member Analysis</h3>
-
+                <h3>Member Analysis for {this.state.memberAbsenceInfo.name}</h3>
+                <table className="table table-bordered text-center">
+                    <thead className="thead-light">
+                    <tr>
+                        <th>Excused</th>
+                        <th>Unexcused</th>
+                        <th>Tardy</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    { this.absencesTable() }
+                    </tbody>
+                </table>
             </div>
         );
     }

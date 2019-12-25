@@ -17,10 +17,27 @@ router.route('/absences/:id').get((req, res) => {
                 attendance: attendanceVal
             }
         })
-            .then(count => { return {[`"${attendanceVal}"`]: count} }))
+            .then(count => { return {[attendanceVal]: count }}))
     });
+    promises.push(Member.findAll({
+        where: {
+            member_number: req.params.id
+        }
+    })
+        .then(members => { return {name: `${members[0].first_name} ${members[0].last_name}`}})
+        .catch(err => res.json(err)));
     Promise.all(promises)
-        .then(counts => res.json(counts))
+        .then(results => {
+            // flatten the object that is returned
+            let memberAbsenceInfo = {};
+            results.forEach(result => {
+                if(result.U !== undefined) memberAbsenceInfo.U = result.U;
+                if(result.E !== undefined) memberAbsenceInfo.E = result.E;
+                if(result.T !== undefined) memberAbsenceInfo.T = result.T;
+                if(result.name !== undefined) memberAbsenceInfo.name = result.name;
+            });
+            res.json(memberAbsenceInfo);
+        })
         .catch(err => res.json(err));
 });
 
