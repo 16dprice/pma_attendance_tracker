@@ -1,11 +1,27 @@
 const router = require('express').Router();
-const { Member } = require('../sequelize');
+const { Member, Attendance } = require('../sequelize');
 
 // use a 'where' clause (which uses AND, not OR)
 router.route('/').get((req, res) => {
     Member.findAll({
         where: req.query
     }).then(users => res.json(users));
+});
+
+router.route('/absences/:id').get((req, res) => {
+    let promises = [];
+    ['U', 'E', 'T'].map(attendanceVal => {
+        promises.push(Attendance.count({
+            where: {
+                memberMemberNumber: req.params.id,
+                attendance: attendanceVal
+            }
+        })
+            .then(count => { return {[`"${attendanceVal}"`]: count} }))
+    });
+    Promise.all(promises)
+        .then(counts => res.json(counts))
+        .catch(err => res.json(err));
 });
 
 // create

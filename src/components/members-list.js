@@ -7,7 +7,7 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 
 const Member = props => (
     <tr>
-        <td>{props.member.member_number}</td>
+        <td><Link to={`/analytics/${props.member.member_number}`}>{props.member.member_number}</Link></td>
         <td>{props.member.first_name}</td>
         <td>{props.member.middle_name}</td>
         <td>{props.member.last_name}</td>
