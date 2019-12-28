@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const EventModel = require('./models/event.model');
 const MemberModel = require('./models/member.model');
 const AttendanceModel = require('./models/attendance.model');
+const RoadiesModel = require('./models/roadies.model');
 
 require('dotenv').config();
 
@@ -18,6 +19,8 @@ const connection = new Sequelize(
 const Event = EventModel(connection, Sequelize);
 const Member = MemberModel(connection, Sequelize);
 const Attendance = AttendanceModel(connection, Sequelize);
+const Roadies = RoadiesModel(connection, Sequelize);
+
 
 Attendance.belongsTo(Event, { onDelete: 'cascade' }); // adds eventUuid reference to events table
 Attendance.belongsTo(Member); // adds memberMemberNumber reference to members table
@@ -55,5 +58,6 @@ connection.sync({ force: resetDatabase })
 module.exports = {
     Event,
     Member,
-    Attendance
+    Attendance,
+    Roadies
 };
