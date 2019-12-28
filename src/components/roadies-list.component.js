@@ -10,7 +10,8 @@ class Roadie extends Component {
     constructor(props) {
         super(props);
 
-        // this.deleteEvent = this.deleteEvent.bind(this);
+        // TODO: add deletion of roadie
+        // this.deleteRoadie = this.deleteRoadie.bind(this);
 
         this.state = {
             roadie: props.roadie
@@ -20,12 +21,6 @@ class Roadie extends Component {
 
     render() {
         return (
-            // <tr>
-            //     <td><Link to={"/event/attendance-record/" + this.state.event.uuid} >{this.state.event.description}</Link></td>
-            //     <td>{this.state.event.date}</td>
-            //     <td>{this.state.event.call_time}</td>
-            //     <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>
-            // </tr>
             <tr>
                 <td>{this.state.roadie.location}</td>
                 <td>{this.state.roadie.members_needed}</td>
@@ -68,8 +63,7 @@ export default class RoadiesList extends Component {
     render() {
         return (
             <div>
-                {/*<h3>Events | <Link to={"/events/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>*/}
-                <h3>Roadies</h3>
+                <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>
                 <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>
