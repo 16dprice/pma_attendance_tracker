@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar.component";
-import MembersList from "./components/members-list";
+import MembersListComponent from "./components/members-list.component";
 import EventsList from "./components/events-list.component";
 import RoadiesList from "./components/roadies-list.component";
 import AttendanceList from "./components/attendance-list.component";
@@ -18,7 +18,7 @@ function App() {
       <div className="container">
         <Navbar />
         <br/>
-        <Route path="/members" exact component={MembersList} />
+        <Route path="/members" exact component={MembersListComponent} />
         <Route path="/events" exact component={EventsList} />
         <Route path="/roadies" exact component={RoadiesList} />
         <Route path="/event/attendance-record/:uuid" component={AttendanceList} />

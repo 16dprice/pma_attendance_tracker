@@ -15,7 +15,7 @@ const Member = props => (
     </tr>
 );
 
-export default class MembersList extends Component {
+export default class MembersListComponent extends Component {
 
     constructor(props) {
         super(props);
