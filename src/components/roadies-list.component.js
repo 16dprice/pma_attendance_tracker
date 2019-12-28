@@ -54,7 +54,6 @@ export default class RoadiesList extends Component {
     roadieList() {
         const sortedRoadies = this.state.roadies
             .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
-        console.log(sortedRoadies);
         return sortedRoadies.map(roadie => {
             return <Roadie roadie={roadie} key={roadie.uuid} />
         });
