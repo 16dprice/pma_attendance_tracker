@@ -9,6 +9,7 @@ import RoadiesList from "./components/roadies-list.component";
 import AttendanceList from "./components/attendance-list.component";
 import CreateMember from "./components/create-member.component";
 import CreateEvent from "./components/create-event.component";
+import CreateRoadie from "./components/create-roadie.component";
 import MemberAnalytics from "./components/member-analytics.component";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/event/attendance-record/:uuid" component={AttendanceList} />
         <Route path="/members/create" component={CreateMember} />
         <Route path="/events/create" component={CreateEvent} />
+        <Route path="/roadies/create" component={CreateRoadie} />
         <Route path="/analytics/:memberNumber" component={MemberAnalytics} />
       </div>
     </Router>
