@@ -21,3 +21,5 @@ router.route('/add').post((req, res) => {
         .catch(err => res.json(err));
 
 });
+
+module.exports = router;
