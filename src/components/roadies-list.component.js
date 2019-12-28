@@ -31,7 +31,7 @@ class Roadie extends Component {
                 <td>{this.state.roadie.members_needed}</td>
                 <td>{this.state.roadie.date}</td>
                 <td>{this.state.roadie.call_time}</td>
-                <td><a onClick={alert('TODO: delete roadie')} href='#'>Delete</a></td>
+                <td><a onClick={console.log('TODO: delete roadie')} href='#'>Delete</a></td>
             </tr>
         );
     }
