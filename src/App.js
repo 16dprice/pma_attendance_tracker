@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar.component";
+import Login from "./components/login.component";
 import MembersListComponent from "./components/members-list.component";
 import EventsList from "./components/events-list.component";
 import RoadiesList from "./components/roadies-list.component";
@@ -13,11 +14,21 @@ import CreateRoadie from "./components/create-roadie.component";
 import MemberAnalytics from "./components/member-analytics.component";
 
 function App() {
+
+  // TODO: want to do more checks here to determine if the member signed in is Pres, VP, Warden, etc to determine what he should see
+
+  let navbar = null;
+  let loggedIn = true;
+  if(loggedIn) {
+    navbar = <Navbar />;
+  }
+
   return (
     <Router>
       <div className="container">
-        <Navbar />
+        {navbar}
         <br/>
+        <Route path="/" exact component={Login} />
         <Route path="/members" exact component={MembersListComponent} />
         <Route path="/events" exact component={EventsList} />
         <Route path="/roadies" exact component={RoadiesList} />
