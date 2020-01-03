@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+
 const EventModel = require('./models/event.model');
 const MemberModel = require('./models/member.model');
 const AttendanceModel = require('./models/attendance.model');
@@ -26,6 +28,7 @@ Attendance.belongsTo(Event, { onDelete: 'cascade' }); // adds eventUuid referenc
 Attendance.belongsTo(Member); // adds memberMemberNumber reference to members table
 
 const resetDatabase = false;
+// const resetDatabase = true;
 
 connection.sync({ force: resetDatabase })
     .then(() => {
@@ -42,13 +45,18 @@ connection.sync({ force: resetDatabase })
 
                 const name = member['MemberName'].split(' ');
 
+                // default password is 'password'
+                let hash = bcrypt.hashSync('password', 10);
                 Member.create({
                     member_number: member['MemberNumber'],
                     first_name: name[0],
                     last_name: name[2],
                     middle_name: name[1],
-                    status: 'active'
+                    status: 'active',
+                    password: hash
                 });
+
+
             });
 
         }

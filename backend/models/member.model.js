@@ -13,6 +13,10 @@ module.exports = (sequelize, type) => {
             allowNull: false
         },
         middle_name: type.STRING,
+        password: {
+            type: type.STRING,
+            allowNull: false
+        },
         status: {
             type: type.ENUM('active', 'inactive'),
             allowNull: false,
