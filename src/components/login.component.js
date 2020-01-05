@@ -37,7 +37,12 @@ export default class Login extends Component {
         };
 
         axios.post('http://localhost:5000/api/members/login', payload)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res);
+                if(res.data.location) {
+                    window.location = res.data.location;
+                }
+            })
             .catch(err => console.log(err));
 
     }

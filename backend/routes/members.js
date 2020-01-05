@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 const { Member, Attendance } = require('../sequelize');
 
 // use a 'where' clause (which uses AND, not OR)
@@ -52,6 +53,37 @@ router.route('/add').post((req, res) => {
 
     Member.create({ member_number, first_name, last_name, middle_name, status })
         .then(member => res.json('Member added!'))
+        .catch(err => res.json(err));
+
+});
+
+router.route('/login').post((req, res) => {
+
+    const { member_number, password } = req.body;
+
+    Member.findAll({
+        where: { member_number }
+    })
+        .then(members => {
+
+            let errors = [];
+
+            const member_found = members.length === 1; // if exactly one member was found
+
+            if(!member_found) {
+                errors.push({ msg: `Member with member number ${member_number} does not exist.` })
+            } else {
+                bcrypt.compare(password, members[0].password, (err, isMatch) => {
+                    if(err) throw err;
+                    if(isMatch) {
+                        res.json({location: '/members'});
+                    } else {
+                        errors.push({ msg: 'Password incorrect' });
+                    }
+                });
+            }
+            // res.json({pass: req.body.password});
+        })
         .catch(err => res.json(err));
 
 });
