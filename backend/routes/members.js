@@ -67,7 +67,7 @@ router.route('/login').post((req, res) => {
         .then(member => {
             let errors = [];
 
-            if(member === null) {
+            if(!member) {
                 errors.push({ msg: `Member with member number ${member_number} does not exist.` });
             } else {
                 const isMatch = bcrypt.compareSync(password === undefined ? '' : password, member.password);
