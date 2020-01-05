@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const { Member, Attendance } = require('../sequelize');
 
 // use a 'where' clause (which uses AND, not OR)
@@ -54,6 +56,28 @@ router.route('/add').post((req, res) => {
         .then(member => res.json('Member added!'))
         .catch(err => res.json(err));
 
+});
+
+router.route('/login').post((req, res, next) => {
+    passport.authenticate('local', (err, member, info) => {
+        if(err) return next(err);
+        req.logIn(member, (err) => {
+            if(err) return next(err);
+            if(!member) res.json({ errors: info });
+            else {
+                res.json({ location: '/members', member });
+            }
+        });
+    })(req, res, next);
+});
+
+router.route('/current').get((req, res) => {
+    res.json(req.user);
+});
+
+router.route('/logout').get((req, res) => {
+    req.logout();
+    res.json({ location: '/' });
 });
 
 // TODO: still need update and delete
