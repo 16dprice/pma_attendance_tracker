@@ -71,18 +71,16 @@ router.route('/login').post((req, res) => {
             const member_found = members.length === 1; // if exactly one member was found
 
             if(!member_found) {
-                errors.push({ msg: `Member with member number ${member_number} does not exist.` })
+                errors.push({ msg: `Member with member number ${member_number} does not exist.` });
             } else {
-                bcrypt.compare(password, members[0].password, (err, isMatch) => {
-                    if(err) throw err;
-                    if(isMatch) {
-                        res.json({location: '/members'});
-                    } else {
-                        errors.push({ msg: 'Password incorrect' });
-                    }
-                });
+                const isMatch = bcrypt.compareSync(password, members[0].password);
+                if(isMatch) {
+                    res.json({location: '/members'});
+                } else {
+                    errors.push({ msg: `Password incorrect for member number ${member_number}` });
+                }
             }
-            // res.json({pass: req.body.password});
+            res.json({ errors });
         })
         .catch(err => res.json(err));
 
