@@ -1,9 +1,45 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
+
+        this.onChangeMemberNumber = this.onChangeMemberNumber.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            member_number: '',
+            password: ''
+        };
+    }
+
+    onChangeMemberNumber(e) {
+        this.setState({
+            member_number: e.target.value
+        });
+    }
+
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+        const payload = {
+            member_number: this.state.member_number,
+            password: this.state.password
+        };
+
+        axios.post('http://localhost:5000/api/members/login', payload)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+
     }
 
     render() {
@@ -15,12 +51,25 @@ export default class Login extends Component {
                         <div className="card my-5">
                             <div className="card-body">
                                 <h5 className="card-title text-center">Sign In</h5>
-                                <form>
+                                <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
-                                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus />
+                                        <input type="text"
+                                               id="inputMemberNumber"
+                                               className="form-control"
+                                               placeholder="Member Number"
+                                               onChange={this.onChangeMemberNumber}
+                                               required
+                                               autoFocus
+                                        />
                                     </div>
                                     <div className="form-group">
-                                        <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                                        <input type="password"
+                                               id="inputPassword"
+                                               className="form-control"
+                                               placeholder="Password"
+                                               onChange={this.onChangePassword}
+                                               required
+                                        />
                                     </div>
                                     <div className="form-group custom-control custom-checkbox mb-3">
                                         <input type="checkbox" className="custom-control-input" id="customCheck1" />
