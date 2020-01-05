@@ -24,11 +24,11 @@ module.exports = (passport) => {
         })
     );
 
-    passport.serializeUser((member, done) => done(null, member.member_number));
-    // not sure if this will work?
-    passport.deserializeUser((id, done) => Member.findOne({ where: { member_number: id } })
-        .then(member => done(null, member))
-        .catch(err => done(err, null))
+    passport.serializeUser((user, done) => done(null, user.member_number));
+    passport.deserializeUser((member_number, done) =>
+        Member.findOne({ where: { member_number } })
+                .then(user => done(null, user))
+                .catch(err => done(err, null))
     );
 
 };
