@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default class Login extends Component {
 
@@ -38,8 +39,9 @@ export default class Login extends Component {
 
         axios.post('http://localhost:5000/api/members/login', payload)
             .then(res => {
-                const { location, errors } = res.data;
+                const { location, member, errors } = res.data;
                 if(location) {
+                    Cookies.set('member', member);
                     window.location = location;
                 } else if(errors) {
                     // TODO: do a bit more than just logging this to the console
