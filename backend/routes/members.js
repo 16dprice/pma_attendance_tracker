@@ -61,9 +61,23 @@ router.route('/add').post((req, res) => {
 router.route('/login').post((req, res, next) => {
     passport.authenticate('local', (err, member, info) => {
         if(err) return next(err);
-        if(!member) res.json({ errors: info });
-        else res.json({ location: '/members' });
+        req.logIn(member, (err) => {
+            if(err) return next(err);
+            if(!member) res.json({ errors: info });
+            else {
+                res.json({ location: '/members', member });
+            }
+        });
     })(req, res, next);
+});
+
+router.route('/current').get((req, res) => {
+    res.json(req.user);
+});
+
+router.route('/logout').get((req, res) => {
+    req.logout();
+    res.json({ location: '/' });
 });
 
 // TODO: still need update and delete
