@@ -36,19 +36,32 @@ function App() {
       </Router>
     );
   } else {
+
+      let availableViews = [];
+      console.log(member);
+      if(member.role === 'developer') {
+          availableViews = [
+              <Route path="/members" exact component={MembersListComponent}/>,
+              <Route path="/events" exact component={EventsList}/>,
+              <Route path="/roadies" exact component={RoadiesList}/>,
+              <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>,
+              <Route path="/members/create" component={CreateMember}/>,
+              <Route path="/events/create" component={CreateEvent}/>,
+              <Route path="/roadies/create" component={CreateRoadie}/>,
+              <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
+          ];
+      } else {
+
+      }
+
+
+
     return (
         <Router>
           <div className="container">
             <Navbar />
             <br/>
-            <Route path="/members" exact component={MembersListComponent}/>
-            <Route path="/events" exact component={EventsList}/>
-            <Route path="/roadies" exact component={RoadiesList}/>
-            <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>
-            <Route path="/members/create" component={CreateMember}/>
-            <Route path="/events/create" component={CreateEvent}/>
-            <Route path="/roadies/create" component={CreateRoadie}/>
-            <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
+              {availableViews}
           </div>
         </Router>
     );

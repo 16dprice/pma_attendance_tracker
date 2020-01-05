@@ -21,6 +21,10 @@ module.exports = (sequelize, type) => {
             type: type.ENUM('active', 'inactive'),
             allowNull: false,
             defaultValue: 'active'
+        },
+        role: {
+            type: type.ENUM('developer', 'president', 'vice-president', 'warden', 'treasurer', 'feo'),
+            defaultValue: null
         }
     });
 };

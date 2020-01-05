@@ -12,6 +12,7 @@ const Member = props => (
         <td>{props.member.middle_name}</td>
         <td>{props.member.last_name}</td>
         <td>{props.member.status}</td>
+        <td>{props.member.role}</td>
     </tr>
 );
 
@@ -50,6 +51,7 @@ export default class MembersListComponent extends Component {
                             <th>Middle Name</th>
                             <th>Last Name</th>
                             <th>Status</th>
+                            <th>Role</th>
                         </tr>
                     </thead>
                     <tbody>

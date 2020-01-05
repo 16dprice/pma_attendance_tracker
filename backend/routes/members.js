@@ -51,8 +51,9 @@ router.route('/add').post((req, res) => {
     const last_name = req.body.last_name;
     const middle_name = req.body.middle_name;
     const status = req.body.status;
+    const role = req.body.role;
 
-    Member.create({ member_number, first_name, last_name, middle_name, status })
+    Member.create({ member_number, first_name, last_name, middle_name, status, role })
         .then(member => res.json('Member added!'))
         .catch(err => res.json(err));
 
