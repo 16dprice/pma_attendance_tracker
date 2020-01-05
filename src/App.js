@@ -18,6 +18,15 @@ function App() {
 
   const member = JSON.parse(Cookies.get('member') === undefined ? null : Cookies.get('member'));
 
+  // everyone can see login page
+    // everyone can see members page
+    // everyone can see events page
+    // everyone can see roadies page
+    // only Warden and President can see attendance list
+    // only FEO and President can create members
+    // only VP can create roadies
+    // only Warden and President can see members analytics
+
   if(!member) {
     return (
       <Router>
