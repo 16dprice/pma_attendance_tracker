@@ -61,21 +61,18 @@ router.route('/login').post((req, res) => {
 
     const { member_number, password } = req.body;
 
-    Member.findAll({
+    Member.findOne({
         where: { member_number }
     })
-        .then(members => {
-
+        .then(member => {
             let errors = [];
 
-            const member_found = members.length === 1; // if exactly one member was found
-
-            if(!member_found) {
+            if(member === null) {
                 errors.push({ msg: `Member with member number ${member_number} does not exist.` });
             } else {
-                const isMatch = bcrypt.compareSync(password, members[0].password);
+                const isMatch = bcrypt.compareSync(password === undefined ? '' : password, member.password);
                 if(isMatch) {
-                    res.json({location: '/members'});
+                    res.json({ location: '/members' });
                 } else {
                     errors.push({ msg: `Password incorrect for member number ${member_number}` });
                 }
