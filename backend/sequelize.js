@@ -72,5 +72,6 @@ module.exports = {
     Event,
     Member,
     Attendance,
-    Roadies
+    Roadies,
+    RoadieSignUp
 };
