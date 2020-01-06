@@ -37,9 +37,6 @@ export default class Navbar extends Component {
                         <li className="navbar-item">
                             <Link to="/roadies" className="nav-link">Roadies</Link>
                         </li>
-                        <li className="navbar-item">
-                            <Link to="/roadies-signup" className="nav-link">Roadie Sign Up</Link>
-                        </li>
 
                         <li className="navbar-item">
                             <button className="btn btn-secondary" onClick={this.onLogout}>Logout</button>

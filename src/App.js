@@ -41,14 +41,14 @@ function App() {
   } else {
 
       let availableViews = [];
-      console.log(member);
+
       if(member.role === 'developer') {
           availableViews = [
               <Route path="/members" exact component={MembersListComponent}/>,
               <Route path="/events" exact component={EventsList}/>,
               <Route path="/roadies" exact component={RoadiesList}/>,
-              <Route path="/roadies-signup" component={RoadieSignup}/>,
 
+              <Route path="/roadies-signup/:uuid" component={RoadieSignup}/>,
               <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>,
               <Route path="/members/create" component={CreateMember}/>,
               <Route path="/events/create" component={CreateEvent}/>,
