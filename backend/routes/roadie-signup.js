@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Roadies, RoadieSignUp } = require('../sequelize');
 
+// get all info needed for roadie sign up page
 router.route('/roadie/:uuid').get((req, res) => {
     Roadies.findOne({
         where: { uuid: req.params.uuid }
@@ -21,6 +22,17 @@ router.route('/roadie/:uuid').get((req, res) => {
             }
         })
         .catch(err => res.json(err));
+});
+
+router.route('/add').post((req, res) => {
+
+    const memberMemberNumber = req.body.member_number;
+    const roadyUuid = req.body.roadieUuid;
+
+    RoadieSignUp.create({ memberMemberNumber, roadyUuid })
+        .then(roadie => res.json(roadie))
+        .catch(err => res.json(err));
+
 });
 
 module.exports = router;

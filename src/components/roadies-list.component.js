@@ -21,7 +21,7 @@ class Roadie extends Component {
 
     render() {
         return (
-            <tr onClick={() => window.location = '/roadies-signup/asldjkf'}>
+            <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td>{this.state.roadie.members_needed}</td>
                 <td>{this.state.roadie.date}</td>
