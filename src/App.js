@@ -56,10 +56,13 @@ function App() {
               <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
           ];
       } else {
+          availableViews = [
+              <Route path="/events" exact component={EventsList}/>,
+              <Route path="/roadies" exact component={RoadiesList}/>,
 
+              <Route path="/roadies-signup/:uuid" component={RoadieSignup}/>
+          ];
       }
-
-
 
     return (
         <Router>
