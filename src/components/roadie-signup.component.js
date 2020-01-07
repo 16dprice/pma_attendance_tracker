@@ -8,6 +8,7 @@ export default class RoadieSignup extends Component {
         super(props);
 
         this.signUp = this.signUp.bind(this);
+        this.drop = this.drop.bind(this);
 
         const member = JSON.parse(Cookies.get('member') === undefined ? null : Cookies.get('member'));
 
@@ -33,6 +34,16 @@ export default class RoadieSignup extends Component {
                 window.location.reload();
                 console.log(res);
             })
+            .catch(err => console.log(err));
+    }
+
+    drop(e) {
+        e.preventDefault();
+
+        const queryString = `?memberMemberNumber=${this.state.currentMember.member_number}&roadyUuid=${this.state.roadieUuid}`;
+
+        axios.delete(`http://localhost:5000/api/roadie-signup/${queryString}`)
+            .then(() => window.location.reload())
             .catch(err => console.log(err));
     }
 
@@ -92,6 +103,9 @@ export default class RoadieSignup extends Component {
                     </li>
                     <button className="btn btn-primary" onClick={this.signUp}>
                         Sign Up
+                    </button>
+                    <button className="btn btn-danger" onClick={this.drop}>
+                        Drop
                     </button>
                 </ul>
             </div>

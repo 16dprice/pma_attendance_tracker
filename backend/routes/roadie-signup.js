@@ -28,4 +28,12 @@ router.route('/add').post((req, res) => {
 
 });
 
+router.route('/').delete((req, res) => {
+    RoadieSignUp.destroy({
+        where: req.query
+    })
+        .then(() => res.json('Deleted Sign Up.'))
+        .catch(err => res.json(err));
+});
+
 module.exports = router;
