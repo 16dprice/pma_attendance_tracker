@@ -8,6 +8,14 @@ router.route('/').get((req, res) => {
     }).then(roadies => res.json(roadies));
 });
 
+router.route('/:uuid').get((req, res) => {
+    Roadies.findOne({
+        where: { uuid: req.params.uuid }
+    })
+        .then(roadie => res.json(roadie))
+        .catch(err => res.json(err));
+});
+
 // create
 router.route('/add').post((req, res) => {
 

@@ -1,25 +1,18 @@
 const router = require('express').Router();
-const { Roadies, RoadieSignUp } = require('../sequelize');
+const { Member, RoadieSignUp } = require('../sequelize');
 
 // get all info needed for roadie sign up page
-router.route('/roadie/:uuid').get((req, res) => {
-    Roadies.findOne({
-        where: { uuid: req.params.uuid }
+router.route('/members/:roadyUuid').get((req, res) => {
+    RoadieSignUp.findAll({
+        where: { roadyUuid: req.params.roadyUuid }
     })
-        .then(roadie => {
-            // roadie will be null if it does not exist
-            if(roadie) {
-                RoadieSignUp.findAll({
-                    where: { roadyUuid: req.params.uuid }
-                })
-                    .then(signUps => {
-                        res.json({
-                            roadie,
-                            signUps // empy array if no one has signed up yet
-                        });
-                    })
-                    .catch(err => res.json(err));
-            }
+        .then(signUps => {
+            const memberNumbers = signUps.map(signUp => signUp.memberMemberNumber);
+            Member.findAll({
+                where: { member_number: memberNumbers }
+            })
+                .then(members => res.json(members))
+                .catch(err => res.json(err));
         })
         .catch(err => res.json(err));
 });
