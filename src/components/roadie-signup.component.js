@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Cookies from "js-cookie";
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 export default class RoadieSignup extends Component {
 
     constructor(props) {
@@ -42,9 +45,23 @@ export default class RoadieSignup extends Component {
 
         const queryString = `?memberMemberNumber=${this.state.currentMember.member_number}&roadyUuid=${this.state.roadieUuid}`;
 
-        axios.delete(`http://localhost:5000/api/roadie-signup/${queryString}`)
-            .then(() => window.location.reload())
-            .catch(err => console.log(err));
+        confirmAlert({
+            title: 'You are about to drop your roadie.',
+            message: 'Are you sure you want to drop this?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.delete(`http://localhost:5000/api/roadie-signup/${queryString}`)
+                            .then(() => window.location.reload())
+                            .catch(err => console.log(err));
+                    }
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        });
     }
 
     getRoadie() {
