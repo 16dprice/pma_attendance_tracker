@@ -97,6 +97,31 @@ export default class RoadieSignup extends Component {
         });
     }
 
+    getSignUpButton() {
+        if(this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)) {
+            return (
+                <button className="btn btn-primary" disabled>
+                    Sign Up
+                </button>
+            );
+        }
+        return (
+            <button className="btn btn-primary" onClick={this.signUp}>
+                Sign Up
+            </button>
+        );
+    }
+
+    getDropButton() {
+        if(this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)) {
+            return (
+                <button className="btn btn-danger" onClick={this.drop}>
+                    Drop
+                </button>
+            );
+        }
+    }
+
     render() {
         return (
             <div>
@@ -118,12 +143,8 @@ export default class RoadieSignup extends Component {
                             {this.signUpList()}
                         </ul>
                     </li>
-                    <button className="btn btn-primary" onClick={this.signUp}>
-                        Sign Up
-                    </button>
-                    <button className="btn btn-danger" onClick={this.drop}>
-                        Drop
-                    </button>
+                    {this.getSignUpButton()}
+                    {this.getDropButton()}
                 </ul>
             </div>
         );
