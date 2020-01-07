@@ -29,11 +29,13 @@ const eventsRouter = require('./routes/events');
 const membersRouter = require('./routes/members');
 const attendanceRouter = require('./routes/attendance');
 const roadiesRouter = require('./routes/roadies');
+const roadieSignUpRouter = require('./routes/roadie-signup');
 
 app.use('/api/events', eventsRouter);
 app.use('/api/members', membersRouter);
 app.use('/api/attendance', attendanceRouter);
 app.use('/api/roadies', roadiesRouter);
+app.use('/api/roadie-signup', roadieSignUpRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}...`);

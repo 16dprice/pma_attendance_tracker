@@ -21,12 +21,16 @@ class Roadie extends Component {
 
     render() {
         return (
-            <tr>
+            <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td>{this.state.roadie.members_needed}</td>
                 <td>{this.state.roadie.date}</td>
                 <td>{this.state.roadie.call_time}</td>
-                <td><a onClick={console.log('TODO: delete roadie')} href='#'>Delete</a></td>
+                <td onClick={(e) => e.stopPropagation()}>
+                    <a onClick={() => console.log('TODO: delete roadie')} href='#'>
+                        Delete
+                    </a>
+                </td>
             </tr>
         );
     }
