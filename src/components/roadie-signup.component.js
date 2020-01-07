@@ -22,7 +22,6 @@ export default class RoadieSignup extends Component {
     signUp(e) {
         e.preventDefault();
 
-        console.log('signing up');
         const member_number = this.state.currentMember.member_number;
         const roadieUuid = this.state.roadieUuid;
 
@@ -37,16 +36,37 @@ export default class RoadieSignup extends Component {
             .catch(err => console.log(err));
     }
 
-    componentDidMount() {
-        axios.get(`http://localhost:5000/api/roadie-signup/roadie/${this.state.roadieUuid}`)
-            .then(res => {
-                this.setState({
-                    roadie: res.data.roadie,
-                    signUps: res.data.signUps
-                });
-                console.log(this.state);
-            })
+    getRoadie() {
+        return axios.get(`http://localhost:5000/api/roadies/${this.state.roadieUuid}`)
+            .then(res => this.setState({ roadie: res.data }))
             .catch(err => console.log(err));
+    }
+
+    getSignUps() {
+        return axios.get(`http://localhost:5000/api/roadie-signup/members/${this.state.roadieUuid}`)
+            .then(res => this.setState({ signUps: res.data }))
+            .catch(err => console.log(err));
+    }
+
+    componentDidMount() {
+        Promise.all([this.getRoadie(), this.getSignUps()]);
+    }
+
+    signUpList() {
+        return this.state.signUps.map(signUp => {
+
+            let displayName = `${signUp.first_name} ${signUp.last_name}`;
+
+            if(signUp.member_number === this.state.currentMember.member_number) {
+                displayName = <b>{displayName}</b>;
+            }
+
+            return (
+                <li className="list-group-item">
+                    {displayName}
+                </li>
+            )
+        });
     }
 
     render() {
@@ -66,7 +86,9 @@ export default class RoadieSignup extends Component {
                         <p>Spots Available: {this.state.roadie.members_needed - this.state.signUps.length}</p>
                     </li>
                     <li className="list-group-item">
-                        <p>You are: {this.state.currentMember.first_name} {this.state.currentMember.last_name}</p>
+                        <ul className="list-group list-group-flush">
+                            {this.signUpList()}
+                        </ul>
                     </li>
                     <button className="btn btn-primary" onClick={this.signUp}>
                         Sign Up
