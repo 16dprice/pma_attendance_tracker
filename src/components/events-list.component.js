@@ -8,6 +8,8 @@ import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
+import PermChecker from "../perm_checker";
+
 class Event extends Component {
 
     constructor(props) {
@@ -49,10 +51,21 @@ class Event extends Component {
 
     }
 
+    getEventDescription() {
+
+        const permChecker = new PermChecker();
+
+        if(permChecker.isPres() || permChecker.isWarden()) {
+            return <Link to={"/event/attendance-record/" + this.state.event.uuid} >{this.state.event.description}</Link>;
+        }
+        return this.state.event.description;
+
+    }
+
     render() {
         return (
             <tr>
-                <td><Link to={"/event/attendance-record/" + this.state.event.uuid} >{this.state.event.description}</Link></td>
+                <td>{this.getEventDescription()}</td>
                 <td>{this.state.event.date}</td>
                 <td>{this.state.event.call_time}</td>
                 <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>
@@ -79,6 +92,17 @@ export default class EventsList extends Component {
             .catch(err => console.log('Error: ' + err));
     }
 
+    getHeader() {
+
+        const permChecker = new PermChecker();
+
+        if(permChecker.isPres() || permChecker.isWarden()) {
+            return <h3>Events | <Link to={"/events/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>;
+        }
+        return <h3>Events</h3>;
+
+    }
+
     eventList() {
         const sortedEvents = this.state.events
             .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
@@ -90,7 +114,7 @@ export default class EventsList extends Component {
     render() {
         return (
             <div>
-                <h3>Events | <Link to={"/events/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>
+                {this.getHeader()}
                 <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>
