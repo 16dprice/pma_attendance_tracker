@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: change this to something better
 
+import PermChecker from "../perm_checker";
+
 class Roadie extends Component {
 
     constructor(props) {
@@ -85,6 +87,17 @@ export default class RoadiesList extends Component {
             .catch(err => console.log('Error: ' + err));
     }
 
+    getHeader() {
+
+        const permChecker = new PermChecker();
+
+        if(permChecker.isVP()) {
+            return <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>;
+        }
+        return <h3>Roadies</h3>;
+
+    }
+
     roadieList() {
         const sortedRoadies = this.state.roadies
             .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
@@ -96,7 +109,7 @@ export default class RoadiesList extends Component {
     render() {
         return (
             <div>
-                <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>
+                {this.getHeader()}
                 <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>
