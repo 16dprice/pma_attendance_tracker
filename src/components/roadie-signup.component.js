@@ -97,6 +97,16 @@ export default class RoadieSignup extends Component {
         });
     }
 
+    getReadableDate() {
+        const date = new Date(this.state.roadie.date);
+
+        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
+        const month = date.toLocaleString('en-us', { month: 'long' });
+        const day = date.getDate();
+
+        return `${weekday}, ${month} ${day}`;
+    }
+
     getSignUpButton() {
 
         if(
@@ -129,7 +139,7 @@ export default class RoadieSignup extends Component {
                         <p>Location: {this.state.roadie.location}</p>
                     </li>
                     <li className="list-group-item">
-                        <p>Date: {this.state.roadie.date}</p>
+                        <p>Date: {this.getReadableDate()}</p>
                     </li>
                     <li className="list-group-item">
                         <p>Call Time: {this.state.roadie.call_time}</p>
