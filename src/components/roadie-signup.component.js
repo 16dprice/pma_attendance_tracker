@@ -99,15 +99,11 @@ export default class RoadieSignup extends Component {
 
     getSignUpButton() {
 
-        if(this.state.roadie.members_needed - this.state.signUps.length <= 0) return;
+        if(
+            this.state.roadie.members_needed - this.state.signUps.length <= 0 ||
+            this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)
+        ) return;
 
-        if(this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)) {
-            return (
-                <button className="btn btn-primary" disabled>
-                    Sign Up
-                </button>
-            );
-        }
         return (
             <button className="btn btn-primary" onClick={this.signUp}>
                 Sign Up
