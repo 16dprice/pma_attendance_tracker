@@ -19,13 +19,43 @@ class Roadie extends Component {
 
     }
 
+    getReadableDate() {
+        const date = new Date(this.state.roadie.date);
+
+        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
+        const month = date.toLocaleString('en-us', { month: 'long' });
+        const day = date.getDate();
+
+        return `${weekday}, ${month} ${day}`;
+    }
+
+    getReadableTime() {
+        let time = this.state.roadie.call_time;
+
+        if(time !== undefined) {
+
+            let isAM = true;
+
+            time = time.split(':');
+
+            let hour = Number(time[0]);
+            if(hour > 12) {
+                hour -= 12;
+                isAM = false;
+            }
+
+            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
+
+        }
+    }
+
     render() {
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td>{this.state.roadie.members_needed}</td>
-                <td>{this.state.roadie.date}</td>
-                <td>{this.state.roadie.call_time}</td>
+                <td>{this.getReadableDate()}</td>
+                <td>{this.getReadableTime()}</td>
                 <td onClick={(e) => e.stopPropagation()}>
                     <a onClick={() => console.log('TODO: delete roadie')} href='#'>
                         Delete

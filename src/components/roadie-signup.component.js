@@ -97,17 +97,42 @@ export default class RoadieSignup extends Component {
         });
     }
 
-    getSignUpButton() {
+    getReadableDate() {
+        const date = new Date(this.state.roadie.date);
 
-        if(this.state.roadie.members_needed - this.state.signUps.length <= 0) return;
+        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
+        const month = date.toLocaleString('en-us', { month: 'long' });
+        const day = date.getDate();
 
-        if(this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)) {
-            return (
-                <button className="btn btn-primary" disabled>
-                    Sign Up
-                </button>
-            );
+        return `${weekday}, ${month} ${day}`;
+    }
+
+    getReadableTime() {
+        let time = this.state.roadie.call_time;
+
+        if(time !== undefined) {
+
+            let isAM = true;
+
+            time = time.split(':');
+
+            let hour = Number(time[0]);
+            if(hour > 12) {
+                hour -= 12;
+                isAM = false;
+            }
+
+            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
+
         }
+    }
+
+    getSignUpButton() {
+        if(
+            this.state.roadie.members_needed - this.state.signUps.length <= 0 ||
+            this.state.signUps.map(signUp => signUp.member_number).includes(this.state.currentMember.member_number)
+        ) return;
+
         return (
             <button className="btn btn-primary" onClick={this.signUp}>
                 Sign Up
@@ -133,10 +158,10 @@ export default class RoadieSignup extends Component {
                         <p>Location: {this.state.roadie.location}</p>
                     </li>
                     <li className="list-group-item">
-                        <p>Date: {this.state.roadie.date}</p>
+                        <p>Date: {this.getReadableDate()}</p>
                     </li>
                     <li className="list-group-item">
-                        <p>Call Time: {this.state.roadie.call_time}</p>
+                        <p>Call Time: {this.getReadableTime()}</p>
                     </li>
                     <li className="list-group-item">
                         <p>Spots Available: {this.state.roadie.members_needed - this.state.signUps.length}</p>
