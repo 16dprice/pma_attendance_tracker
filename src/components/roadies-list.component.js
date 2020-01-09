@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: change this to something better
 
+import PermChecker from "../perm_checker";
+
 class Roadie extends Component {
 
     constructor(props) {
@@ -19,13 +21,43 @@ class Roadie extends Component {
 
     }
 
+    getReadableDate() {
+        const date = new Date(this.state.roadie.date);
+
+        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
+        const month = date.toLocaleString('en-us', { month: 'long' });
+        const day = date.getDate();
+
+        return `${weekday}, ${month} ${day}`;
+    }
+
+    getReadableTime() {
+        let time = this.state.roadie.call_time;
+
+        if(time !== undefined) {
+
+            let isAM = true;
+
+            time = time.split(':');
+
+            let hour = Number(time[0]);
+            if(hour > 12) {
+                hour -= 12;
+                isAM = false;
+            }
+
+            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
+
+        }
+    }
+
     render() {
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td>{this.state.roadie.members_needed}</td>
-                <td>{this.state.roadie.date}</td>
-                <td>{this.state.roadie.call_time}</td>
+                <td>{this.getReadableDate()}</td>
+                <td>{this.getReadableTime()}</td>
                 <td onClick={(e) => e.stopPropagation()}>
                     <a onClick={() => console.log('TODO: delete roadie')} href='#'>
                         Delete
@@ -55,6 +87,17 @@ export default class RoadiesList extends Component {
             .catch(err => console.log('Error: ' + err));
     }
 
+    getHeader() {
+
+        const permChecker = new PermChecker();
+
+        if(permChecker.isVP()) {
+            return <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>;
+        }
+        return <h3>Roadies</h3>;
+
+    }
+
     roadieList() {
         const sortedRoadies = this.state.roadies
             .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
@@ -66,7 +109,7 @@ export default class RoadiesList extends Component {
     render() {
         return (
             <div>
-                <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>
+                {this.getHeader()}
                 <table className="table table-bordered text-center">
                     <thead className="thead-light">
                     <tr>

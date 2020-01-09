@@ -24,9 +24,12 @@ export default class Navbar extends Component {
 
     render() {
         return(
-            <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+            <nav className="navbar navbar-dark bg-dark navbar-expand-md">
                 <Link to="/members" className="navbar-brand">&Phi;&Mu;&Alpha;</Link>
-                <div className="collapse navbar-collapse">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div id="menu" className="collapse navbar-collapse">
                     <ul className="navbar-nav mr-auto">
                         <li className="navbar-item">
                             <Link to="/members" className="nav-link">Members</Link>
@@ -37,7 +40,8 @@ export default class Navbar extends Component {
                         <li className="navbar-item">
                             <Link to="/roadies" className="nav-link">Roadies</Link>
                         </li>
-
+                    </ul>
+                    <ul className="navbar-right navbar-nav">
                         <li className="navbar-item">
                             <button className="btn btn-secondary" onClick={this.onLogout}>Logout</button>
                         </li>
