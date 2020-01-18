@@ -15,7 +15,8 @@ const connection = new Sequelize(
     process.env.MYSQL_PASS,
     {
         host: process.env.MYSQL_HOST,
-        dialect: 'mysql'
+        dialect: 'mysql',
+        port: process.env.MYSQL_PORT
     }
 );
 
@@ -39,32 +40,28 @@ connection.sync({ force: resetDatabase })
     .then(() => {
         console.log(`Database & tables created!`);
 
-        if(resetDatabase) {
-            // init all member records
-            const memberCsvPath = './models/members.csv';
-            const csvToJson = require('convert-csv-to-json');
-
-            const memberJson = csvToJson.fieldDelimiter(',').formatValueByType().getJsonFromCsv(memberCsvPath);
-
-            memberJson.forEach(member => {
-
-                const name = member['MemberName'].split(' ');
-
-                // default password is 'password'
-                let hash = bcrypt.hashSync('password', 10);
-                Member.create({
-                    member_number: member['MemberNumber'],
-                    first_name: name[0],
-                    last_name: name[2],
-                    middle_name: name[1],
-                    status: 'active',
-                    password: hash
-                });
-
-
-            });
-
-        }
+        // if(resetDatabase) {
+        //     const memberJson = csvToJson.fieldDelimiter(',').formatValueByType().getJsonFromCsv(memberCsvPath);
+        //
+        //     memberJson.forEach(member => {
+        //
+        //         const name = member['MemberName'].split(' ');
+        //
+        //         // default password is 'password'
+        //         let hash = bcrypt.hashSync('password', 10);
+        //         Member.create({
+        //             member_number: member['MemberNumber'],
+        //             first_name: name[0],
+        //             last_name: name[2],
+        //             middle_name: name[1],
+        //             status: 'active',
+        //             password: hash
+        //         });
+        //
+        //
+        //     });
+        //
+        // }
 
     });
 
