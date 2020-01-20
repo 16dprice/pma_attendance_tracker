@@ -41,14 +41,14 @@ export default class CreateEvent extends Component {
     generateMemberAttendanceRecords(eventUuid) {
         return new Promise((resolve, reject) => {
             // get all user records then generate attendance records from all of them
-            axios.get('http://localhost:5000/api/members/?status=active')
+            axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/members/?status=active')
                 .then(res => {
                     const memberNumbers = res.data.map(member => member.member_number);
                     const postData = {
                         eventUuid,
                         memberNumbers
                     };
-                    axios.post('http://localhost:5000/api/attendance/add_records', postData)
+                    axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/attendance/add_records', postData)
                         .then(res => resolve(res))
                         .catch(err => console.log(err));
                 });
@@ -65,7 +65,7 @@ export default class CreateEvent extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post('http://localhost:5000/api/events/add', event)
+        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/events/add', event)
             .then(res => {
                 // an event is returned in res.data
                 this.generateMemberAttendanceRecords(res.data.uuid)

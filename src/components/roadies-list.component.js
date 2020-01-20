@@ -78,7 +78,7 @@ export default class RoadiesList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/roadies')
+        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/roadies')
             .then(res => {
                 this.setState({
                     roadies: res.data
