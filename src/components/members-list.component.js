@@ -35,7 +35,7 @@ class Member extends Component {
                 <td>{this.state.member.first_name}</td>
                 <td>{this.state.member.last_name}</td>
                 <td>{this.state.member.status}</td>
-                <td>{this.state.member.role}</td>
+                <td className="member-role">{this.state.member.role}</td>
             </tr>
         );
     }
@@ -86,7 +86,7 @@ export default class MembersListComponent extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Status</th>
-                            <th>Role</th>
+                            <th className="member-role">Role</th>
                         </tr>
                     </thead>
                     <tbody>
