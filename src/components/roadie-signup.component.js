@@ -29,7 +29,7 @@ export default class RoadieSignup extends Component {
         const member_number = this.state.currentMember.member_number;
         const roadieUuid = this.state.roadieUuid;
 
-        axios.post('http://localhost:5000/api/roadie-signup/add', {
+        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/add', {
             member_number,
             roadieUuid
         })
@@ -52,7 +52,7 @@ export default class RoadieSignup extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete(`http://localhost:5000/api/roadie-signup/${queryString}`)
+                        axios.delete(`http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/${queryString}`)
                             .then(() => window.location.reload())
                             .catch(err => console.log(err));
                     }
@@ -65,13 +65,13 @@ export default class RoadieSignup extends Component {
     }
 
     getRoadie() {
-        return axios.get(`http://localhost:5000/api/roadies/${this.state.roadieUuid}`)
+        return axios.get(`http://pmaiotamuattendance.neat-url.com:5000/api/roadies/${this.state.roadieUuid}`)
             .then(res => this.setState({ roadie: res.data }))
             .catch(err => console.log(err));
     }
 
     getSignUps() {
-        return axios.get(`http://localhost:5000/api/roadie-signup/members/${this.state.roadieUuid}`)
+        return axios.get(`http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/members/${this.state.roadieUuid}`)
             .then(res => this.setState({ signUps: res.data }))
             .catch(err => console.log(err));
     }

@@ -55,7 +55,7 @@ class Roadie extends Component {
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
-                <td>{this.state.roadie.members_needed}</td>
+                <td className="members-needed">{this.state.roadie.members_needed}</td>
                 <td>{this.getReadableDate()}</td>
                 <td>{this.getReadableTime()}</td>
                 <td onClick={(e) => e.stopPropagation()}>
@@ -78,7 +78,7 @@ export default class RoadiesList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/roadies')
+        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/roadies')
             .then(res => {
                 this.setState({
                     roadies: res.data
@@ -114,7 +114,7 @@ export default class RoadiesList extends Component {
                     <thead className="thead-light">
                     <tr>
                         <th>Location</th>
-                        <th>Members Needed</th>
+                        <th className="members-needed">Members Needed</th>
                         <th>Date</th>
                         <th>Call Time</th>
                         <th> </th>

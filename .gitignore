@@ -34,3 +34,6 @@ package-lock.json
 package.json
 
 backend/database_backups/
+
+# Local Netlify folder
+.netlify

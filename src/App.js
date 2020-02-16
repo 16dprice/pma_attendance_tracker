@@ -19,6 +19,14 @@ import MemberAnalytics from "./components/member-analytics.component";
 
 import PermChecker from "./perm_checker";
 
+function getNavbar() {
+    const permChecker = new PermChecker();
+
+    if(permChecker.member) {
+        return [ <Navbar/>, <br/> ];
+    }
+}
+
 function getAvailableViews() {
 
     const permChecker = new PermChecker();
@@ -29,8 +37,6 @@ function getAvailableViews() {
 
     if(permChecker.isDev()) {
         return [
-            <Navbar/>,
-            <br/>,
             <Route path="/members" exact component={MembersListComponent}/>,
             <Route path="/events" exact component={EventsList}/>,
             <Route path="/roadies" exact component={RoadiesList}/>,
@@ -46,8 +52,6 @@ function getAvailableViews() {
 
     // default views
     let availableViews = [
-        <Navbar />,
-        <br/>,
         <Route path="/members" exact component={MembersListComponent}/>,
         <Route path="/events" exact component={EventsList}/>,
         <Route path="/roadies" exact component={RoadiesList}/>,
@@ -77,6 +81,9 @@ function App() {
 
     return (
         <Router>
+            <div className="container-fullwidth">
+                {getNavbar()}
+            </div>
             <div className="container">
                 {getAvailableViews()}
             </div>
