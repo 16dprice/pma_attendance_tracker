@@ -33,7 +33,7 @@ function getAvailableViews() {
     const permChecker = new PermChecker();
 
     if(!permChecker.member) {
-        return [ <Route path="/" exact component={Login} /> ];
+        // return [ <Route path="/" exact component={Login} /> ];
     }
 
     if(permChecker.isDev()) {
