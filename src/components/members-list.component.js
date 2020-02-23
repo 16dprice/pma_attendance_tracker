@@ -50,7 +50,7 @@ export default class MembersListComponent extends Component {
     }
 
     componentDidMount() {
-        axios.get('www.pmaiotamuattendance.neat-url.com:5000/api/members')
+        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/members')
             .then(res => {
                 this.setState({
                     members: res.data

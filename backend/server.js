@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
@@ -7,7 +9,8 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const unsecurePort = process.env.UNSECURE_PORT || 5001;
+const securePort = process.env.SECURE_PORT || 5000;
 
 require('./config/passport')(passport);
 
@@ -37,6 +40,13 @@ app.use('/api/attendance', attendanceRouter);
 app.use('/api/roadies', roadiesRouter);
 app.use('/api/roadie-signup', roadieSignUpRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}...`);
+app.listen(unsecurePort, () => {
+    console.log(`Server is running on port ${unsecurePort}...`);
 });
+
+const options = {
+    key: fs.readFileSync("/etc/letsencrypt/live/pmaiotamuattendance.neat-url.com/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/pmaiotamuattendance.neat-url.com/fullchain.pem")
+};
+
+https.createServer(options, app).listen(securePort);
