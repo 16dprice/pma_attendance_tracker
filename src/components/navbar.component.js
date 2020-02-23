@@ -14,7 +14,7 @@ export default class Navbar extends Component {
     onLogout(e) {
         e.preventDefault();
 
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/members/logout')
+        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/members/logout')
             .then(res => {
                 Cookies.remove('member');
                 if(res.data.location) window.location = res.data.location;

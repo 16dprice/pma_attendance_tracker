@@ -35,7 +35,7 @@ class Event extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete('http://pmaiotamuattendance.neat-url.com:5000/api/events/' + this.state.event.uuid)
+                        axios.delete('https://pmaiotamuattendance.neat-url.com:5000/api/events/' + this.state.event.uuid)
                             .then(res => {
                                 console.log(res.data);
                                 window.location = '/events';
@@ -83,7 +83,7 @@ export default class EventsList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/events')
+        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/events')
             .then(res => {
                 this.setState({
                     events: res.data

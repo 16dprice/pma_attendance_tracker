@@ -64,7 +64,7 @@ export default class CreateMember extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/members/add', member)
+        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/members/add', member)
             .then(res => {
                 console.log(res.data);
                 window.location = '/members';

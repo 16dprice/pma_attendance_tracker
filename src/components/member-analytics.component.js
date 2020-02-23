@@ -14,7 +14,7 @@ export default class MemberAnalytics extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/members/absences/' + this.props.match.params.memberNumber)
+        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/members/absences/' + this.props.match.params.memberNumber)
             .then(res => this.setState({
                 memberAbsenceInfo: res.data
             }))

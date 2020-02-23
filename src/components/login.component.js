@@ -37,7 +37,7 @@ export default class Login extends Component {
             password: this.state.password
         };
 
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/members/login', payload)
+        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/members/login', payload)
             .then(res => {
                 const { location, member, errors } = res.data;
                 if(location) {

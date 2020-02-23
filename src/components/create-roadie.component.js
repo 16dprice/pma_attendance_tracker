@@ -57,7 +57,7 @@ export default class CreateRoadie extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/roadies/add', roadie)
+        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/roadies/add', roadie)
             .then(res => {
                 console.log(res.data);
                 window.location = '/roadies';
