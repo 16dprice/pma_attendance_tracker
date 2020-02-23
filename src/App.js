@@ -25,7 +25,7 @@ function getNavbar() {
     if(permChecker.member) {
         return [ <Navbar/>, <br/> ];
     }
-    return [ <Navbar/>, <br/> ];
+
 }
 
 function getAvailableViews() {
@@ -33,7 +33,7 @@ function getAvailableViews() {
     const permChecker = new PermChecker();
 
     if(!permChecker.member) {
-        // return [ <Route path="/" exact component={Login} /> ];
+        return [ <Route path="/" exact component={Login} /> ];
     }
 
     if(permChecker.isDev()) {
@@ -50,18 +50,6 @@ function getAvailableViews() {
             <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
         ];
     }
-    return [
-        <Route path="/members" exact component={MembersListComponent}/>,
-        <Route path="/events" exact component={EventsList}/>,
-        <Route path="/roadies" exact component={RoadiesList}/>,
-
-        <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>,
-        <Route path="/members/create" component={CreateMember}/>,
-        <Route path="/roadies-signup/:uuid" component={RoadieSignup}/>,
-        <Route path="/events/create" component={CreateEvent}/>,
-        <Route path="/roadies/create" component={CreateRoadie}/>,
-        <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
-    ];
 
     // default views
     let availableViews = [
