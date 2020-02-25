@@ -82,7 +82,7 @@ class Roadie extends Component {
         const permChecker = new PermChecker();
         let roadieDelete = null;
         if(permChecker.isVP()) {
-            roadieDelete = <td onClick={(e) => e.preventDefault()}><a onClick={this.deleteRoadie} href='#'>Delete</a></td>;
+            roadieDelete = <td onClick={(e) => e.stopPropagation()}><a onClick={this.deleteRoadie} href='#'>Delete</a></td>;
         }
 
         return (
