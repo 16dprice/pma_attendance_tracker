@@ -63,16 +63,12 @@ class Event extends Component {
     }
 
     render() {
-        const permChecker = new PermChecker();
-        let eventDelete = null;
-        if(permChecker.isWarden()) eventDelete = <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>;
-
         return (
             <tr>
                 <td>{this.getEventDescription()}</td>
                 <td>{this.state.event.date}</td>
                 <td>{this.state.event.call_time}</td>
-                {eventDelete}
+                <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>
             </tr>
         );
     }
@@ -116,9 +112,6 @@ export default class EventsList extends Component {
     }
 
     render() {
-        const permChecker = new PermChecker();
-        const eventDelete = permChecker.isWarden() ? <th></th> : null;
-
         return (
             <div>
                 {this.getHeader()}
@@ -128,7 +121,7 @@ export default class EventsList extends Component {
                         <th>Description</th>
                         <th>Date</th>
                         <th>Call Time</th>
-                        {eventDelete}
+                        <th> </th>
                     </tr>
                     </thead>
                     <tbody>

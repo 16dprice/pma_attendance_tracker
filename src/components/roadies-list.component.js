@@ -79,19 +79,17 @@ class Roadie extends Component {
     }
 
     render() {
-        const permChecker = new PermChecker();
-        let roadieDelete = null;
-        if(permChecker.isVP()) {
-            roadieDelete = <td><a onClick={this.deleteRoadie} href='#'>Delete</a></td>;
-        }
-
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td className="members-needed">{this.state.roadie.members_needed}</td>
                 <td>{this.getReadableDate()}</td>
                 <td>{this.getReadableTime()}</td>
-                {roadieDelete}
+                <td onClick={(e) => e.stopPropagation()}>
+                    <a onClick={this.deleteRoadie} href='#'>
+                        Delete
+                    </a>
+                </td>
             </tr>
         );
     }
@@ -136,8 +134,6 @@ export default class RoadiesList extends Component {
     }
 
     render() {
-        const permChecker = new PermChecker();
-        const roadieDelete = permChecker.isVP() ? <th></th> : null;
         return (
             <div>
                 {this.getHeader()}
@@ -148,7 +144,7 @@ export default class RoadiesList extends Component {
                         <th className="members-needed">Members Needed</th>
                         <th>Date</th>
                         <th>Call Time</th>
-                        {roadieDelete}
+                        <th> </th>
                     </tr>
                     </thead>
                     <tbody>
