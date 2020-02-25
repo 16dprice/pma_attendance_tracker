@@ -99,12 +99,13 @@ export default class RoadieSignup extends Component {
 
     getReadableDate() {
         const date = new Date(this.state.roadie.date);
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
-        const month = date.toLocaleString('en-us', { month: 'long' });
-        const day = date.getDate();
+        const day = days[date.getUTCDay()];
+        const month = months[date.getUTCMonth()];
 
-        return `${weekday}, ${month} ${day}`;
+        return `${day}, ${month} ${date.getUTCDate()}`;
     }
 
     getReadableTime() {
