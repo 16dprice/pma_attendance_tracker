@@ -30,4 +30,15 @@ router.route('/add').post((req, res) => {
 
 });
 
+// delete
+router.route('/:id').delete((req, res) => {
+    Roadies.destroy({
+        where: {
+            uuid: req.params.id
+        }
+    })
+        .then(() => res.json('Deleted Roadie!'))
+        .catch(err => res.status(400).json(err));
+});
+
 module.exports = router;

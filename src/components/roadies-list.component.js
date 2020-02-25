@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: change this to something better
 
 import PermChecker from "../perm_checker";
+import {confirmAlert} from "react-confirm-alert";
 
 class Roadie extends Component {
 
     constructor(props) {
         super(props);
 
-        // TODO: add deletion of roadie
-        // this.deleteRoadie = this.deleteRoadie.bind(this);
+        this.deleteRoadie = this.deleteRoadie.bind(this);
 
         this.state = {
             roadie: props.roadie
@@ -51,6 +51,33 @@ class Roadie extends Component {
         }
     }
 
+    deleteRoadie(e) {
+
+        e.preventDefault();
+
+        confirmAlert({
+            title: 'Deleting this roadie is permanent.',
+            message: `Are you sure you want to delete the roadie at '${this.state.roadie.location}' that occurred on ${this.state.roadie.date}?`,
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.delete('https://pmaiotamuattendance.neat-url.com:5000/api/roadies/' + this.state.roadie.uuid)
+                            .then(res => {
+                                console.log(res.data);
+                                window.location = '/roadies';
+                            })
+                            .catch(err => console.log(err));
+                    }
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        });
+
+    }
+
     render() {
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
@@ -59,7 +86,7 @@ class Roadie extends Component {
                 <td>{this.getReadableDate()}</td>
                 <td>{this.getReadableTime()}</td>
                 <td onClick={(e) => e.stopPropagation()}>
-                    <a onClick={() => console.log('TODO: delete roadie')} href='#'>
+                    <a onClick={this.deleteRoadie} href='#'>
                         Delete
                     </a>
                 </td>
