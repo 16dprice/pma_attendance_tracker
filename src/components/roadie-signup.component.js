@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import moment from "moment";
+import {config} from "../constants";
 
 export default class RoadieSignup extends Component {
 
@@ -30,7 +31,7 @@ export default class RoadieSignup extends Component {
         const member_number = this.state.currentMember.member_number;
         const roadieUuid = this.state.roadieUuid;
 
-        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/add', {
+        axios.post(`${config.url.API_URL}/api/roadie-signup/add`, {
             member_number,
             roadieUuid
         })
@@ -53,7 +54,7 @@ export default class RoadieSignup extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete(`https://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/${queryString}`)
+                        axios.delete(`${config.url.API_URL}/api/roadie-signup/${queryString}`)
                             .then(() => window.location.reload())
                             .catch(err => console.log(err));
                     }
@@ -66,13 +67,13 @@ export default class RoadieSignup extends Component {
     }
 
     getRoadie() {
-        return axios.get(`https://pmaiotamuattendance.neat-url.com:5000/api/roadies/${this.state.roadieUuid}`)
+        return axios.get(`${config.url.API_URL}/api/roadies/${this.state.roadieUuid}`)
             .then(res => this.setState({ roadie: res.data }))
             .catch(err => console.log(err));
     }
 
     getSignUps() {
-        return axios.get(`https://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/members/${this.state.roadieUuid}`)
+        return axios.get(`${config.url.API_URL}/api/roadie-signup/members/${this.state.roadieUuid}`)
             .then(res => this.setState({ signUps: res.data }))
             .catch(err => console.log(err));
     }

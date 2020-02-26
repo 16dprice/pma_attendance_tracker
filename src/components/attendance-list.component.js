@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import {config} from "../constants";
 
 class AttendanceRecord extends Component {
 
@@ -33,7 +34,7 @@ class AttendanceRecord extends Component {
             attendance: this.state.attendance_status
         };
 
-        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/attendance/update/' + this.state.record_id, attendanceUpdateInfo)
+        axios.post(`${config.url.API_URL}/api/attendance/update/${this.state.record_id}`, attendanceUpdateInfo)
             .then(res => {
                 console.log(res.data);
                 window.location = '/event/attendance-record/' + this.state.eventUuid;
@@ -74,14 +75,14 @@ export default class AttendanceList extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/attendance/attendance-list/?eventUuid=' + this.props.match.params.uuid)
+        axios.get(`${config.url.API_URL}/api/attendance/attendance-list/?eventUuid=${this.props.match.params.uuid}`)
             .then(res => {
                 this.setState({
                     attendanceRecords: res.data
                 });
             })
             .catch(err => console.log('Error: ' + err));
-        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/events/?uuid=' + this.props.match.params.uuid)
+        axios.get(`${config.url.API_URL}/api/events/?uuid=${this.props.match.params.uuid}`)
             .then(res => {
                 console.log(res.data[0]);
                 this.setState({

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import {config} from "../constants";
 
 export default class CreateMember extends Component {
 
@@ -64,7 +65,7 @@ export default class CreateMember extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post('https://pmaiotamuattendance.neat-url.com:5000/api/members/add', member)
+        axios.post(`${config.url.API_URL}/api/members/add`, member)
             .then(res => {
                 console.log(res.data);
                 window.location = '/members';

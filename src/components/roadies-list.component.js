@@ -8,6 +8,7 @@ import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: cha
 
 import PermChecker from "../perm_checker";
 import {confirmAlert} from "react-confirm-alert";
+import {config} from "../constants";
 
 class Roadie extends Component {
 
@@ -41,7 +42,7 @@ class Roadie extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete('https://pmaiotamuattendance.neat-url.com:5000/api/roadies/' + this.state.roadie.uuid)
+                        axios.delete(`${config.url.API_URL}/api/roadies/${this.state.roadie.uuid}`)
                             .then(res => {
                                 console.log(res.data);
                                 window.location = '/roadies';
@@ -86,7 +87,7 @@ export default class RoadiesList extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/roadies')
+        axios.get(`${config.url.API_URL}/api/roadies`)
             .then(res => {
                 this.setState({
                     roadies: res.data

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {config} from "../constants";
 
 export default class Navbar extends Component {
 
@@ -14,7 +15,7 @@ export default class Navbar extends Component {
     onLogout(e) {
         e.preventDefault();
 
-        axios.get('https://pmaiotamuattendance.neat-url.com:5000/api/members/logout')
+        axios.get(`${config.url.API_URL}/api/members/logout`)
             .then(res => {
                 Cookies.remove('member');
                 if(res.data.location) window.location = res.data.location;
