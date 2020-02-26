@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from "moment";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
@@ -62,6 +63,14 @@ class Event extends Component {
 
     }
 
+    getReadableDate() {
+        return moment(this.state.event.date).format('dddd, MMMM Do');
+    }
+
+    getReadableTime() {
+        moment(this.state.event.date + ' ' + this.state.event.call_time).format('h:mm a')
+    }
+
     render() {
         const permChecker = new PermChecker();
         let eventDelete = null;
@@ -70,8 +79,8 @@ class Event extends Component {
         return (
             <tr>
                 <td>{this.getEventDescription()}</td>
-                <td>{this.state.event.date}</td>
-                <td>{this.state.event.call_time}</td>
+                <td>{this.getReadableDate()}</td>
+                <td>{this.getReadableTime()}</td>
                 {eventDelete}
             </tr>
         );

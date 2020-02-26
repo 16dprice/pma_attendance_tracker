@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import moment from "moment";
 
 export default class RoadieSignup extends Component {
 
@@ -98,34 +99,11 @@ export default class RoadieSignup extends Component {
     }
 
     getReadableDate() {
-        const date = new Date(this.state.roadie.date);
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        const day = days[date.getUTCDay()];
-        const month = months[date.getUTCMonth()];
-
-        return `${day}, ${month} ${date.getUTCDate()}`;
+        return moment(this.state.roadie.date).format('dddd, MMMM Do');
     }
 
     getReadableTime() {
-        let time = this.state.roadie.call_time;
-
-        if(time !== undefined) {
-
-            let isAM = true;
-
-            time = time.split(':');
-
-            let hour = Number(time[0]);
-            if(hour > 12) {
-                hour -= 12;
-                isAM = false;
-            }
-
-            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
-
-        }
+        return moment(this.state.roadie.date + ' ' + this.state.roadie.call_time).format('h:mm a');
     }
 
     getSignUpButton() {

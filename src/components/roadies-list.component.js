@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from "moment";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: change this to something better
@@ -22,34 +23,11 @@ class Roadie extends Component {
     }
 
     getReadableDate() {
-        const date = new Date(this.state.roadie.date);
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        const day = days[date.getUTCDay()];
-        const month = months[date.getUTCMonth()];
-
-        return `${day}, ${month} ${date.getUTCDate()}`;
+        return moment(this.state.roadie.date).format('dddd, MMMM Do');
     }
 
     getReadableTime() {
-        let time = this.state.roadie.call_time;
-
-        if(time !== undefined) {
-
-            let isAM = true;
-
-            time = time.split(':');
-
-            let hour = Number(time[0]);
-            if(hour > 12) {
-                hour -= 12;
-                isAM = false;
-            }
-
-            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
-
-        }
+        return moment(this.state.roadie.date + ' ' + this.state.roadie.call_time).format('h:mm a');
     }
 
     deleteRoadie(e) {
