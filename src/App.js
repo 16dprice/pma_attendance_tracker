@@ -25,6 +25,7 @@ function getNavbar() {
     if(permChecker.member) {
         return [ <Navbar/>, <br/> ];
     }
+
 }
 
 function getAvailableViews() {

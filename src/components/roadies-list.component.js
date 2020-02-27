@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from "moment";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons'; // TODO: change this to something better
 
 import PermChecker from "../perm_checker";
+import {confirmAlert} from "react-confirm-alert";
+import {config} from "../constants";
 
 class Roadie extends Component {
 
     constructor(props) {
         super(props);
 
-        // TODO: add deletion of roadie
-        // this.deleteRoadie = this.deleteRoadie.bind(this);
+        this.deleteRoadie = this.deleteRoadie.bind(this);
 
         this.state = {
             roadie: props.roadie
@@ -22,47 +24,54 @@ class Roadie extends Component {
     }
 
     getReadableDate() {
-        const date = new Date(this.state.roadie.date);
-
-        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
-        const month = date.toLocaleString('en-us', { month: 'long' });
-        const day = date.getDate();
-
-        return `${weekday}, ${month} ${day}`;
+        return moment(this.state.roadie.date).format('dddd, MMMM Do');
     }
 
     getReadableTime() {
-        let time = this.state.roadie.call_time;
+        return moment(this.state.roadie.date + ' ' + this.state.roadie.call_time).format('h:mm a');
+    }
 
-        if(time !== undefined) {
+    deleteRoadie(e) {
 
-            let isAM = true;
+        e.preventDefault();
 
-            time = time.split(':');
+        confirmAlert({
+            title: 'Deleting this roadie is permanent.',
+            message: `Are you sure you want to delete the roadie at '${this.state.roadie.location}' that occurred on ${this.state.roadie.date}?`,
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.delete(`${config.url.API_URL}/api/roadies/${this.state.roadie.uuid}`)
+                            .then(res => {
+                                console.log(res.data);
+                                window.location = '/roadies';
+                            })
+                            .catch(err => console.log(err));
+                    }
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        });
 
-            let hour = Number(time[0]);
-            if(hour > 12) {
-                hour -= 12;
-                isAM = false;
-            }
-
-            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
-
-        }
     }
 
     render() {
+        const permChecker = new PermChecker();
+        let roadieDelete = null;
+        if(permChecker.isVP()) {
+            roadieDelete = <td onClick={(e) => e.stopPropagation()}><a onClick={this.deleteRoadie} href='#'>Delete</a></td>;
+        }
+
         return (
             <tr onClick={() => window.location = `/roadies-signup/${this.state.roadie.uuid}`}>
                 <td>{this.state.roadie.location}</td>
                 <td className="members-needed">{this.state.roadie.members_needed}</td>
                 <td>{this.getReadableDate()}</td>
                 <td>{this.getReadableTime()}</td>
-                <td onClick={(e) => e.stopPropagation()}>
-                    <a onClick={() => console.log('TODO: delete roadie')} href='#'>
-                        Delete
-                    </a>
-                </td>
+                {roadieDelete}
             </tr>
         );
     }
@@ -78,7 +87,7 @@ export default class RoadiesList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/roadies')
+        axios.get(`${config.url.API_URL}/api/roadies`)
             .then(res => {
                 this.setState({
                     roadies: res.data
@@ -107,6 +116,8 @@ export default class RoadiesList extends Component {
     }
 
     render() {
+        const permChecker = new PermChecker();
+        const roadieDelete = permChecker.isVP() ? <th></th> : null;
         return (
             <div>
                 {this.getHeader()}
@@ -117,7 +128,7 @@ export default class RoadiesList extends Component {
                         <th className="members-needed">Members Needed</th>
                         <th>Date</th>
                         <th>Call Time</th>
-                        <th> </th>
+                        {roadieDelete}
                     </tr>
                     </thead>
                     <tbody>

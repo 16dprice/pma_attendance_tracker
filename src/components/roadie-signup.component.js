@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import moment from "moment";
+import {config} from "../constants";
 
 export default class RoadieSignup extends Component {
 
@@ -29,7 +31,7 @@ export default class RoadieSignup extends Component {
         const member_number = this.state.currentMember.member_number;
         const roadieUuid = this.state.roadieUuid;
 
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/add', {
+        axios.post(`${config.url.API_URL}/api/roadie-signup/add`, {
             member_number,
             roadieUuid
         })
@@ -52,7 +54,7 @@ export default class RoadieSignup extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete(`http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/${queryString}`)
+                        axios.delete(`${config.url.API_URL}/api/roadie-signup/${queryString}`)
                             .then(() => window.location.reload())
                             .catch(err => console.log(err));
                     }
@@ -65,13 +67,13 @@ export default class RoadieSignup extends Component {
     }
 
     getRoadie() {
-        return axios.get(`http://pmaiotamuattendance.neat-url.com:5000/api/roadies/${this.state.roadieUuid}`)
+        return axios.get(`${config.url.API_URL}/api/roadies/${this.state.roadieUuid}`)
             .then(res => this.setState({ roadie: res.data }))
             .catch(err => console.log(err));
     }
 
     getSignUps() {
-        return axios.get(`http://pmaiotamuattendance.neat-url.com:5000/api/roadie-signup/members/${this.state.roadieUuid}`)
+        return axios.get(`${config.url.API_URL}/api/roadie-signup/members/${this.state.roadieUuid}`)
             .then(res => this.setState({ signUps: res.data }))
             .catch(err => console.log(err));
     }
@@ -98,33 +100,11 @@ export default class RoadieSignup extends Component {
     }
 
     getReadableDate() {
-        const date = new Date(this.state.roadie.date);
-
-        const weekday = date.toLocaleString('en-us', { weekday: 'long' });
-        const month = date.toLocaleString('en-us', { month: 'long' });
-        const day = date.getDate();
-
-        return `${weekday}, ${month} ${day}`;
+        return moment(this.state.roadie.date).format('dddd, MMMM Do');
     }
 
     getReadableTime() {
-        let time = this.state.roadie.call_time;
-
-        if(time !== undefined) {
-
-            let isAM = true;
-
-            time = time.split(':');
-
-            let hour = Number(time[0]);
-            if(hour > 12) {
-                hour -= 12;
-                isAM = false;
-            }
-
-            return `${hour}:${time[1]} ${isAM ? "AM" : "PM"}`;
-
-        }
+        return moment(this.state.roadie.date + ' ' + this.state.roadie.call_time).format('h:mm a');
     }
 
     getSignUpButton() {

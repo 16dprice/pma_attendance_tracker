@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import moment from "moment";
+import { config } from '../constants';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
@@ -35,7 +37,7 @@ class Event extends Component {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.delete('http://pmaiotamuattendance.neat-url.com:5000/api/events/' + this.state.event.uuid)
+                        axios.delete(`${config.url.API_URL}/api/events/` + this.state.event.uuid)
                             .then(res => {
                                 console.log(res.data);
                                 window.location = '/events';
@@ -62,13 +64,25 @@ class Event extends Component {
 
     }
 
+    getReadableDate() {
+        return moment(this.state.event.date).format('dddd, MMMM Do');
+    }
+
+    getReadableTime() {
+        return moment(this.state.event.date + ' ' + this.state.event.call_time).format('h:mm a')
+    }
+
     render() {
+        const permChecker = new PermChecker();
+        let eventDelete = null;
+        if(permChecker.isWarden()) eventDelete = <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>;
+
         return (
             <tr>
                 <td>{this.getEventDescription()}</td>
-                <td>{this.state.event.date}</td>
-                <td>{this.state.event.call_time}</td>
-                <td><a onClick={this.deleteEvent} href='#'>Delete</a></td>
+                <td>{this.getReadableDate()}</td>
+                <td>{this.getReadableTime()}</td>
+                {eventDelete}
             </tr>
         );
     }
@@ -83,7 +97,7 @@ export default class EventsList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/events')
+        axios.get(`${config.url.API_URL}/api/events`)
             .then(res => {
                 this.setState({
                     events: res.data
@@ -112,6 +126,9 @@ export default class EventsList extends Component {
     }
 
     render() {
+        const permChecker = new PermChecker();
+        const eventDelete = permChecker.isWarden() ? <th></th> : null;
+
         return (
             <div>
                 {this.getHeader()}
@@ -121,7 +138,7 @@ export default class EventsList extends Component {
                         <th>Description</th>
                         <th>Date</th>
                         <th>Call Time</th>
-                        <th> </th>
+                        {eventDelete}
                     </tr>
                     </thead>
                     <tbody>

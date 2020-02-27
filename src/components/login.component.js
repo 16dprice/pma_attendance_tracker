@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {config} from "../constants";
 
 export default class Login extends Component {
 
@@ -37,7 +38,7 @@ export default class Login extends Component {
             password: this.state.password
         };
 
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/members/login', payload)
+        axios.post(`${config.url.API_URL}/api/members/login`, payload)
             .then(res => {
                 const { location, member, errors } = res.data;
                 if(location) {

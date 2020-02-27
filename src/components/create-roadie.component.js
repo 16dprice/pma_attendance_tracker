@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import {config} from "../constants";
 
 export default class CreateRoadie extends Component {
 
@@ -57,7 +58,7 @@ export default class CreateRoadie extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post('http://pmaiotamuattendance.neat-url.com:5000/api/roadies/add', roadie)
+        axios.post(`${config.url.API_URL}/api/roadies/add`, roadie)
             .then(res => {
                 console.log(res.data);
                 window.location = '/roadies';

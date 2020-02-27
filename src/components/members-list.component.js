@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { config } from "../constants";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
@@ -50,7 +51,7 @@ export default class MembersListComponent extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://pmaiotamuattendance.neat-url.com:5000/api/members')
+        axios.get(`${config.url.API_URL}/api/members`)
             .then(res => {
                 this.setState({
                     members: res.data
