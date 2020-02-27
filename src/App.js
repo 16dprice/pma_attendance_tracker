@@ -10,6 +10,7 @@ import MembersListComponent from "./components/members-list.component";
 import EventsList from "./components/events-list.component";
 import RoadiesList from "./components/roadies-list.component";
 import RoadieSignup from "./components/roadie-signup.component";
+import VPRoadieInterface from "./components/vp-roadie-interface.component";
 
 import AttendanceList from "./components/attendance-list.component";
 import CreateMember from "./components/create-member.component";
@@ -41,6 +42,7 @@ function getAvailableViews() {
             <Route path="/members" exact component={MembersListComponent}/>,
             <Route path="/events" exact component={EventsList}/>,
             <Route path="/roadies" exact component={RoadiesList}/>,
+            <Route path="/vp-roadie-interface" exact component={VPRoadieInterface}/>,
 
             <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>,
             <Route path="/members/create" component={CreateMember}/>,
@@ -72,6 +74,7 @@ function getAvailableViews() {
 
     if(permChecker.isVP()) {
         availableViews.push( <Route path="/roadies/create" component={CreateRoadie}/> );
+        availableViews.push( <Route path="/vp-roadie-interface" exact component={VPRoadieInterface}/> );
     }
 
     return availableViews;
