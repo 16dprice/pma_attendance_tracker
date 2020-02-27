@@ -69,7 +69,7 @@ class Event extends Component {
     }
 
     getReadableTime() {
-        moment(this.state.event.date + ' ' + this.state.event.call_time).format('h:mm a')
+        return moment(this.state.event.date + ' ' + this.state.event.call_time).format('h:mm a')
     }
 
     render() {
