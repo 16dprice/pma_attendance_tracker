@@ -108,8 +108,13 @@ export default class RoadiesList extends Component {
     }
 
     roadieList() {
-        const sortedRoadies = this.state.roadies
-            .sort((a, b) => new Date(`${b.date} ${b.call_time}`) - new Date(`${a.date} ${a.call_time}`));
+        // gets all roadies occurring after right now (so only upcoming ones)
+        const filteredRoadies = this.state.roadies
+            .filter(roadie => new Date(`${roadie.date} ${roadie.call_time}`) > new Date(Date.now()));
+
+        const sortedRoadies = filteredRoadies
+            .sort((a, b) => new Date(`${a.date} ${a.call_time}`) - new Date(`${b.date} ${b.call_time}`));
+
         return sortedRoadies.map(roadie => {
             return <Roadie roadie={roadie} key={roadie.uuid} />
         });
