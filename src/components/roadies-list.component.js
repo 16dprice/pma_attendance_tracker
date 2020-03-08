@@ -60,9 +60,19 @@ class Roadie extends Component {
 
     render() {
         const permChecker = new PermChecker();
+
         let roadieDelete = null;
-        if(permChecker.isVP()) {
-            roadieDelete = <td onClick={(e) => e.stopPropagation()}><a onClick={this.deleteRoadie} href='#'>Delete</a></td>;
+        if(permChecker.isVP() || permChecker.isPres()) {
+            roadieDelete = <td onClick={(e) => e.stopPropagation()}>
+                <a onClick={this.deleteRoadie} href='#'>Delete</a>
+            </td>;
+        }
+
+        let roadieEdit = null;
+        if(permChecker.isVP() || permChecker.isPres()) {
+            roadieEdit = <td onClick={(e) => e.stopPropagation()}>
+                <Link to="/roadies/edit" className="nav-link">Edit</Link>
+            </td>
         }
 
         return (
@@ -72,6 +82,7 @@ class Roadie extends Component {
                 <td>{this.getReadableDate()}</td>
                 <td>{this.getReadableTime()}</td>
                 {roadieDelete}
+                {roadieEdit}
             </tr>
         );
     }
@@ -100,7 +111,7 @@ export default class RoadiesList extends Component {
 
         const permChecker = new PermChecker();
 
-        if(permChecker.isVP()) {
+        if(permChecker.isVP() || permChecker.isPres()) {
             return <h3>Roadies | <Link to={"/roadies/create"}><FontAwesomeIcon icon={faCalendarPlus}/></Link></h3>;
         }
         return <h3>Roadies</h3>;
@@ -117,7 +128,8 @@ export default class RoadiesList extends Component {
 
     render() {
         const permChecker = new PermChecker();
-        const roadieDelete = permChecker.isVP() ? <th></th> : null;
+        const roadieDelete = permChecker.isVP() || permChecker.isPres() ? <th></th> : null;
+        const roadieEdit = permChecker.isVP() || permChecker.isPres() ? <th></th> : null;
         return (
             <div>
                 {this.getHeader()}
@@ -129,6 +141,7 @@ export default class RoadiesList extends Component {
                         <th>Date</th>
                         <th>Call Time</th>
                         {roadieDelete}
+                        {roadieEdit}
                     </tr>
                     </thead>
                     <tbody>

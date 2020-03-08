@@ -41,9 +41,6 @@ export default class Navbar extends Component {
                         <li className="navbar-item">
                             <Link to="/roadies" className="nav-link">Roadies</Link>
                         </li>
-                        <li className="navbar-item">
-                            <Link to="/vp-roadie-interface" className="nav-link">Edit Roadies</Link>
-                        </li>
                     </ul>
                     <ul className="navbar-right navbar-nav">
                         <li className="navbar-item">

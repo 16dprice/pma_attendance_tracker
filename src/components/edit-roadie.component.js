@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class VPRoadieInterface extends Component {
+export default class EditRoadie extends Component {
 
     render() {
         return (

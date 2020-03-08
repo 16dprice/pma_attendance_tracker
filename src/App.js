@@ -10,7 +10,7 @@ import MembersListComponent from "./components/members-list.component";
 import EventsList from "./components/events-list.component";
 import RoadiesList from "./components/roadies-list.component";
 import RoadieSignup from "./components/roadie-signup.component";
-import VPRoadieInterface from "./components/vp-roadie-interface.component";
+import EditRoadie from "./components/edit-roadie.component";
 
 import AttendanceList from "./components/attendance-list.component";
 import CreateMember from "./components/create-member.component";
@@ -42,13 +42,13 @@ function getAvailableViews() {
             <Route path="/members" exact component={MembersListComponent}/>,
             <Route path="/events" exact component={EventsList}/>,
             <Route path="/roadies" exact component={RoadiesList}/>,
-            <Route path="/vp-roadie-interface" exact component={VPRoadieInterface}/>,
 
             <Route path="/event/attendance-record/:uuid" component={AttendanceList}/>,
             <Route path="/members/create" component={CreateMember}/>,
             <Route path="/roadies-signup/:uuid" component={RoadieSignup}/>,
             <Route path="/events/create" component={CreateEvent}/>,
             <Route path="/roadies/create" component={CreateRoadie}/>,
+            <Route path="/roadies/edit" exact component={EditRoadie}/>,
             <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
         ];
     }
@@ -72,9 +72,9 @@ function getAvailableViews() {
         availableViews.push( <Route path="/members/create" component={CreateMember}/> );
     }
 
-    if(permChecker.isVP()) {
+    if(permChecker.isVP() || permChecker.isPres()) {
         availableViews.push( <Route path="/roadies/create" component={CreateRoadie}/> );
-        availableViews.push( <Route path="/vp-roadie-interface" exact component={VPRoadieInterface}/> );
+        availableViews.push( <Route path="/roadies/edit-roadie" exact component={EditRoadie}/> );
     }
 
     return availableViews;
