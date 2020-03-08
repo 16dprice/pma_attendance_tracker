@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import {config} from "../constants";
 import DatePicker from "react-datepicker";
+import moment from "moment";
 
 export default class EditRoadie extends Component {
 
@@ -51,6 +52,7 @@ export default class EditRoadie extends Component {
         e.preventDefault();
 
         const roadie = {
+            uuid: this.state.roadieUuid,
             location: this.state.location,
             members_needed: this.state.members_needed,
             date: new Date(this.state.date),
@@ -58,10 +60,10 @@ export default class EditRoadie extends Component {
         };
 
         // use axios library to post something to the API endpoint
-        axios.post(`${config.url.API_URL}/api/roadies/add`, roadie)
+        axios.post(`${config.url.API_URL}/api/roadies/update/`, roadie)
             .then(res => {
                 console.log(res.data);
-                window.location = '/roadies';
+                window.location.reload();
             })
             .catch(err => console.log('Error: ' + err));
 
@@ -76,7 +78,7 @@ export default class EditRoadie extends Component {
                 this.setState({
                     location: roadie.location,
                     members_needed: roadie.members_needed,
-                    date: new Date(roadie.date),
+                    date: new Date(moment(roadie.date).format('MM/DD/YYYY')),
                     call_time: roadie.call_time.split(':').slice(0, 2).join(':')
                 });
 
