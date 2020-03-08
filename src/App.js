@@ -48,7 +48,7 @@ function getAvailableViews() {
             <Route path="/roadies-signup/:uuid" component={RoadieSignup}/>,
             <Route path="/events/create" component={CreateEvent}/>,
             <Route path="/roadies/create" component={CreateRoadie}/>,
-            <Route path="/roadies/edit" exact component={EditRoadie}/>,
+            <Route path="/roadies/edit/:uuid" exact component={EditRoadie}/>,
             <Route path="/analytics/:memberNumber" component={MemberAnalytics}/>
         ];
     }
@@ -74,7 +74,7 @@ function getAvailableViews() {
 
     if(permChecker.isVP() || permChecker.isPres()) {
         availableViews.push( <Route path="/roadies/create" component={CreateRoadie}/> );
-        availableViews.push( <Route path="/roadies/edit-roadie" exact component={EditRoadie}/> );
+        availableViews.push( <Route path="/roadies/edit-roadie/:uuid" exact component={EditRoadie}/> );
     }
 
     return availableViews;
