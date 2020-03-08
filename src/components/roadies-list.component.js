@@ -71,7 +71,7 @@ class Roadie extends Component {
         let roadieEdit = null;
         if(permChecker.isVP() || permChecker.isPres()) {
             roadieEdit = <td onClick={(e) => e.stopPropagation()}>
-                <Link to="/roadies/edit" className="nav-link">Edit</Link>
+                <Link to={`/roadies/edit/${this.state.roadie.uuid}`} className="nav-link">Edit</Link>
             </td>
         }
 
